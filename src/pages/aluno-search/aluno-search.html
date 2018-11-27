@@ -1,0 +1,18 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{ 'ALUNO_SEARCH_TITLE' | translate }}</ion-title>
+    <!--ion-title>{{ currentPeriodoLetivo.numero + '/' + currentPeriodoLetivo.ano }}</ion-title-->
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-searchbar (ionInput)="getItems($event)" placeholder="{{ 'ALUNO_SEARCH_PLACEHOLDER' | translate }}"></ion-searchbar>
+  <ion-list>
+    <button ion-item *ngFor="let aluno of currentListaAluno" (click)="openItem(aluno)" text-wrap>
+      <h2>{{aluno.matricula+' - '+aluno.nome}}</h2>
+    </button>
+  </ion-list>
+</ion-content>

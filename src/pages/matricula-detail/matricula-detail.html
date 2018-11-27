@@ -1,0 +1,53 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{ 'MATRICULA_DETAIL_TITLE' | translate }}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <div class="matricula-detail" padding text-wrap>
+    <h6>{{matricula.turma.disciplina.codigo+' - '+matricula.turma.disciplina.nome+' - '+matricula.turma.codigo}}</h6>
+    <p *ngFor="let horarioAula of matricula.turma.listaHorarioAula">{{ horarioAula.dia+': '+horarioAula.hora}}</p>
+    <br/>
+    <p *ngIf="matricula.prioridade">{{'Prioridade: '+matricula.prioridade}}</p>
+    <p *ngIf="matricula.stats">{{'Status: '+matricula.status}}</p>
+  </div>
+  <ion-footer *ngIf="(faseMatricula == 'Confirmacao') &&
+  (matricula.status == 'PreMatricula' || matricula.status == 'Retirado' || matricula.status == 'Confirmado')">
+    <div class="btn-wrapper">
+      <button ion-button icon-left color="danger" (click)="alterarStatus('Retirado')">
+        <ion-icon name="close-circle"></ion-icon>
+        {{ 'REJECT_BUTTON' | translate }}
+      </button>
+      <button ion-button icon-left color="secondary" (click)="alterarStatus('Confirmado')">
+        <ion-icon name="checkmark-circle"></ion-icon>
+        {{ 'CONFIRM_BUTTON' | translate }}
+      </button>
+    </div>
+  </ion-footer>
+  <ion-footer *ngIf="(faseMatricula == 'Confirmacao') &&
+  (matricula.status == 'Pedido' || matricula.status == 'Cancelado')">
+    <div class="btn-wrapper">
+      <button ion-button icon-left color="danger" (click)="alterarStatus('Cancelado')">
+        <ion-icon name="close-circle"></ion-icon>
+        {{ 'REJECT_BUTTON' | translate }}
+      </button>
+      <button ion-button icon-left color="secondary" (click)="alterarStatus('Pedido')">
+        <ion-icon name="checkmark-circle"></ion-icon>
+        {{ 'CONFIRM_BUTTON' | translate }}
+      </button>
+    </div>
+  </ion-footer>
+  <ion-footer *ngIf="(perfil == 'Coordenador' && faseMatricula == 'Ajuste') &&
+  (matricula.status == 'Matriculado')">
+    <div class="btn-wrapper">
+      <button ion-button icon-left color="danger" (click)="retirarMatricula()">
+        <ion-icon name="close-circle"></ion-icon>
+        {{ 'REJECT_BUTTON' | translate }}
+      </button>
+    </div>
+  </ion-footer>
+</ion-content>

@@ -1,0 +1,7 @@
+{
+  "name": "matriculaApp",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}

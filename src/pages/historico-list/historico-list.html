@@ -1,0 +1,30 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{ 'HISTORICO_LIST_TITLE' | translate }}</ion-title>
+    <!--ion-title>{{ currentPeriodoLetivo.numero + '/' + currentPeriodoLetivo.ano }}</ion-title-->
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+  <div padding *ngIf="!currentAluno">
+      {{ 'DEFINIR_ALUNO' | translate }}
+  </div>
+  <div ion-item padding text-wrap *ngIf="currentAluno">
+    <ion-avatar item-start>
+      <img [src]="currentAluno.profilePic" />
+    </ion-avatar>
+    <h2>{{currentAluno.matricula}}</h2>
+    <p>{{currentAluno.nome}}</p>
+  </div>
+
+  <ion-list *ngIf="currentAluno">
+    <div *ngFor="let matriculaHistorico of currentListaHistorico">
+      <div ion-item text-wrap>
+        <h2>{{matriculaHistorico.turma.disciplina.codigo+' - '+matriculaHistorico.turma.disciplina.nome+' - '+matriculaHistorico.turma.codigo}}</h2>
+        <p>{{matriculaHistorico.status+' em '+matriculaHistorico.timestamp}}</p>
+      </div>
+    </div>
+  </ion-list>
+</ion-content>

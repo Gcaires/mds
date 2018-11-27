@@ -1,0 +1,33 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{ 'TURMA_LIST_TITLE' | translate }}</ion-title>
+    <!--ion-title>{{ currentPeriodoLetivo.numero + '/' + currentPeriodoLetivo.ano }}</ion-title-->
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item-sliding *ngFor="let turma of currentListaTurma">
+      <div ion-item text-wrap>
+        <h2>{{turma.disciplina.codigo+' - '+turma.disciplina.nome+' - '+turma.codigo}}</h2>
+        <p *ngFor="let horarioAula of turma.listaHorarioAula">{{ horarioAula.dia+': '+horarioAula.hora}}</p>
+        <p>{{ 'Vagas Disponíveis: '+(turma.numeroVagas-turma.numeroMatriculas)}}</p>
+      </div>
+
+      <ion-item-options *ngIf="(faseMatricula == 'Confirmacao') && alunoDefinido">
+        <button ion-button icon-left color="secondary" (click)="confirmarPedidoMatricula(turma)">
+          <ion-icon name="checkmark-circle"></ion-icon>
+          {{ 'ADD_BUTTON' | translate }}
+        </button>
+      </ion-item-options>
+      <ion-item-options *ngIf="(perfil =='Coordenador') && (faseMatricula == 'Ajuste') && alunoDefinido">
+        <button ion-button icon-left color="secondary" (click)="ajustarMatricula(turma)">
+          <ion-icon name="checkmark-circle"></ion-icon>
+          {{ 'ADD_BUTTON' | translate }}
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>

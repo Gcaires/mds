@@ -1,0 +1,54 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{ 'MATRICULA_LIST_TITLE' | translate }}</ion-title>
+    <!--ion-title>{{ currentPeriodoLetivo.numero + '/' + currentPeriodoLetivo.ano }}</ion-title-->
+
+    <!--ion-buttons end>
+      <button ion-button icon-only (click)="addItem()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons-->
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+  <div padding *ngIf="!currentAluno">
+      {{ 'DEFINIR_ALUNO' | translate }}
+  </div>
+  <div ion-item padding text-wrap *ngIf="currentAluno">
+    <ion-avatar item-start>
+      <img [src]="currentAluno.profilePic" />
+    </ion-avatar>
+    <h2>{{currentAluno.matricula}}</h2>
+    <p>{{currentAluno.nome}}</p>
+  </div>
+
+  <ion-list *ngIf="currentAluno">
+    <ion-item-sliding *ngFor="let matricula of currentListaMatricula">
+      <button ion-item (click)="openItem(matricula)" text-wrap>
+        <!--ion-avatar item-start>
+          <img [src]="item.profilePic" />
+        </ion-avatar-->
+        <h2>{{matricula.turma.disciplina.codigo+' - '+matricula.turma.disciplina.nome+' - '+matricula.turma.codigo}}</h2>
+        <p>{{matricula.status}}</p>
+        <!--ion-note item-end *ngIf="item.note">{{item.note}}</ion-note-->
+      </button>
+
+      <ion-item-options *ngIf="!matricula.status">
+        <button ion-button color="danger" (click)="deleteItem(matricula)">
+          {{ 'DELETE_BUTTON' | translate }}
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+  <div padding *ngIf="(faseMatricula=='Confirmacao') && currentAluno">
+    <button
+			disabled="!hasPreMatricula"
+			ion-button block (click)="confirmarMatricula()">
+      <ion-icon name="checkmark-circle"></ion-icon>
+      {{ 'CONFIRM_BUTTON' | translate }}
+    </button>
+  </div>
+</ion-content>
